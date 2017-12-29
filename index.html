@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Guess My Number</title>  
+    <script type="text/javascript">
+    
+// primary function	
+	function numberGuess(){
+		var inputString = document.getElementById("userNum").value;
+		
+	
+// validate input		
+		if (inputString.includes(".")) {  
+			window.alert("Please enter an integer between 1 and 999"); 
+
+		} else if  ((inputString < 1) || (inputString > 999))  {
+		    window.alert("Please enter an integer between 1 and 999"); 		
+
+// continue with guesses
+		} else { 
+			
+		  var text1 = "";
+		  var i = 2;
+		  var min=1;
+		  var max=1000;
+		  var compGuessX= 500;
+		  var newmin = "";
+		  var newmax = "";
+					
+// Guess 1
+				// if compGuess < inputString, raise minimum to compGuess
+			    if (compGuessX < inputString) {
+				  text1 +="Guess No. 1 is " + compGuessX + "<br /> Computer guess is less than user number <br />";
+				  var newmin = compGuessX;
+				  var newmax = 1000;
+				}	
+			    // if compGuess > inputString, lower maximum to compGuess
+				if (compGuessX > inputString) {
+				  text1 +="Guess No. 1 is " + compGuessX + "<br /> Computer guess is more than user number <br />";
+				  var newmin = 1;
+				  var newmax = compGuessX;
+				}
+				// first guess matches inputString
+				if (inputString == "500") {					
+					text1 +="Guess No. 1 is " + compGuessX + "<br /> Computer wins!";
+					document.getElementById("text1").innerHTML = text1;	
+				} 
+				if (inputString != 500){
+// Guesses 2-10		
+					do {
+						// inital guess is 500, from there, change range and divide by 2, add minimum
+						var compGuessX = Math.floor(((newmax-newmin)/2)+newmin);
+				        // if compGuess < inputString, raise minimum to compGuess
+						if (compGuessX < inputString) {
+							text1 +="Guess No. " + i + " is " + compGuessX + "<br />" + "Computer guess is less than user number. <br />";
+							var newmin = compGuessX;
+						} 
+						// if compGuess > inputString, lower maximum to compGuess
+						if (compGuessX > inputString) {
+							text1 +="Guess No. " + i + " is " + compGuessX + "<br />" + "Computer guess is more than user number. <br />";
+							var newmax = compGuessX;
+							document.getElementById("text1").innerHTML = text1;
+						}
+						// once function guesses number, break loop
+						if (compGuessX == inputString) {
+							text1 +="Guess No. " + i + " is " + compGuessX + "<br /> Computer wins!";
+							document.getElementById("text1").innerHTML = text1;
+							break;
+						}
+						i++;
+					}
+					while (i < 11)  ;	
+				}  // end if inputString is not 500
+			}  // end else     
+	}  // end function numberGuess
+
+	</script>
+  </head>
+  <body>
+   
+    <h2>Guess My Number</h2>
+	  <h4>Enter a number between 1 and 999.  Askhing only higher or lower, script will find number in 10 guesses or less.</h4>
+  
+    <form method="post" enctype="multipart/form-data">  
+      <input type="number" min="1" max="999"  step="1" name="userNum" id="userNum" pattern="[0-9]"/>Number
+      <p><button type="button" onclick="numberGuess();">Submit</button></p>   
+    </form> 
+        
+    <p id="text1"></p>
+        
+  </body>
+</html>
+
